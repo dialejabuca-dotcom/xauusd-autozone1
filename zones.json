@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-23T01:29:37Z",
+  "updated": "2026-11-23T02:01:07Z",
   "sesgo": "ALCISTA",
   "choch_h1": true,
   "precio_actual": 3614.41,
@@ -65,5 +65,6 @@
       "touch_count": 1,
       "descripcion": "Zona acumulacion H1 - soporte 3532-3538 consolidado 6h"
     }
-  ]
+  ],
+  "test_push": true
 }
