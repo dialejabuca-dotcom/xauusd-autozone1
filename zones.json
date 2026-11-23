@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-23T02:01:07Z",
-  "sesgo": "ALCISTA",
-  "choch_h1": true,
-  "precio_actual": 3614.41,
-  "zona_precio": "PREMIUM",
+  "updated": "2026-11-23T02:09:34Z",
+  "sesgo": "LATERAL",
+  "choch_h1": false,
+  "precio_actual": 3592.44,
+  "zona_precio": "DISCOUNT",
   "rango_48h": {
     "min": 3521.75,
-    "max": 3616.84
+    "max": 3631.35
   },
   "red_folder_hoy": false,
   "red_folder_tipo": "NONE",
@@ -20,50 +20,5 @@
   "asian_low": 3532.57,
   "threshold_override": null,
   "judas_sweep_ocurrido": false,
-  "zones": [
-    {
-      "id": "SHORT_OB1",
-      "type": "SHORT",
-      "zh": 3584.36,
-      "zl": 3582.75,
-      "sl": 3598.01,
-      "t1": 3557.06,
-      "rr_estimado": 1.68,
-      "touch_count": 0,
-      "descripcion": "OB bajista H1 2026-11-23 11:00 - ultima vela bear antes del pump"
-    },
-    {
-      "id": "SHORT_OB2",
-      "type": "SHORT",
-      "zh": 3616.84,
-      "zl": 3610,
-      "sl": 3623.68,
-      "t1": 3603.16,
-      "rr_estimado": 1,
-      "touch_count": 0,
-      "descripcion": "Resistencia top del rango - high del dia"
-    },
-    {
-      "id": "LONG_OB1",
-      "type": "LONG",
-      "zh": 3571.69,
-      "zl": 3568.89,
-      "sl": 3566.09,
-      "t1": 3574.49,
-      "rr_estimado": 1,
-      "touch_count": 0,
-      "descripcion": "FVG alcista H1 - gap del pump 2026-11-23 10-12:00"
-    },
-    {
-      "id": "LONG_OB2",
-      "type": "LONG",
-      "zh": 3538.51,
-      "zl": 3532.57,
-      "sl": 3526.63,
-      "t1": 3544.45,
-      "rr_estimado": 2,
-      "touch_count": 1,
-      "descripcion": "Zona acumulacion H1 - soporte 3532-3538 consolidado 6h"
-    }
-  ]
+  "zones": []
 }
