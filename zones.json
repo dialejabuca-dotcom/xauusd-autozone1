@@ -1,1 +1,77 @@
-{"zones_push_test":"ok","time":"2026-11-24T01:40:23Z"}
+{
+  "updated": "2026-11-24T01:58:57Z",
+  "sesgo": "BAJISTA",
+  "choch_h1": true,
+  "precio_actual": 3661.24,
+  "zona_precio": "PREMIUM",
+  "rango_48h": {
+    "min": 3521.75,
+    "max": 3689.08
+  },
+  "red_folder_hoy": false,
+  "red_folder_tipo": "NONE",
+  "red_folder_eventos": [],
+  "red_folder_spike_time": null,
+  "sesgo_semanal": "BAJISTA",
+  "sesgo_semanal_fuerza": "DEBIL",
+  "pdh": 3689.08,
+  "pdl": 3576.36,
+  "asian_high": 3681.2,
+  "asian_low": 3620.56,
+  "threshold_override": null,
+  "judas_sweep_ocurrido": false,
+  "zones": [
+    {
+      "id": "SHORT_FVG1",
+      "type": "SHORT",
+      "zh": 3654.7,
+      "zl": 3643.41,
+      "sl": 3666.0,
+      "t1": 3632.11,
+      "rr_estimado": 1.0,
+      "touch_count": 3,
+      "descripcion": "FVG bajista H1 i=1 2026-11-24 11:00:00",
+      "zona_tipo": "FVG",
+      "gap_size": 11.3
+    },
+    {
+      "id": "SHORT_OB2",
+      "type": "SHORT",
+      "zh": 3670.9,
+      "zl": 3668.26,
+      "sl": 3673.53,
+      "t1": 3665.62,
+      "rr_estimado": 2.0,
+      "touch_count": 2,
+      "descripcion": "OB bajista H1 2026-11-24 04:00:00",
+      "zona_tipo": "OB",
+      "exhaustion": "zona debilitada 2 cruces"
+    },
+    {
+      "id": "LONG_OB3",
+      "type": "LONG",
+      "zh": 3635.68,
+      "zl": 3634.58,
+      "sl": 3633.49,
+      "t1": 3636.77,
+      "rr_estimado": 2.0,
+      "touch_count": 3,
+      "descripcion": "OB alcista H1 2026-11-24 11:00:00",
+      "zona_tipo": "OB",
+      "exhaustion": "zona debilitada 3 cruces"
+    },
+    {
+      "id": "LONG_OB4",
+      "type": "LONG",
+      "zh": 3620.5,
+      "zl": 3618.41,
+      "sl": 3616.32,
+      "t1": 3622.58,
+      "rr_estimado": 2.0,
+      "touch_count": 2,
+      "descripcion": "OB alcista H1 2026-11-24 01:00:00",
+      "zona_tipo": "OB",
+      "exhaustion": "zona debilitada 2 cruces"
+    }
+  ]
+}
