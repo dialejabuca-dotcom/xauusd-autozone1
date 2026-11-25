@@ -1,0 +1,120 @@
+name: AUTO-ZONAS XAUUSD
+on:
+  schedule:
+    # Cada hora en minuto :58 (UTC), Lun-Sab (incluye DOM para merge horario COL)
+    - cron: '58 * * * 1,2,3,4,5,6'
+  workflow_dispatch:  # permite disparo manual para tests
+
+jobs:
+  update-zones:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch H1 candles from Twelve Data
+        run: |
+          curl -s "https://api.twelvedata.com/time_series?symbol=XAU%2FUSD&interval=1h&outputsize=60&apikey=21fe3d64e76247199a434bff93f9dffd" > /tmp/az_h1.json
+          python3 -c "
+          import json, sys
+          d = json.load(open('/tmp/az_h1.json'))
+          if 'values' not in d:
+              print('ERROR: no values field:', d.get('message', d.get('code', 'unknown')))
+              sys.exit(1)
+          print(f'OK: {len(d[\"values\"])} candles, latest close={d[\"values\"][0][\"close\"]}')
+          "
+
+      - name: Calculate zones and build zones.json
+        run: |
+          python3 -c "
+          import json, base64
+          from datetime import datetime, timezone
+
+          vals = json.load(open('/tmp/az_h1.json'))['values']
+          highs  = [float(v['high'])  for v in vals]
+          lows   = [float(v['low'])   for v in vals]
+          opens  = [float(v['open'])  for v in vals]
+          closes = [float(v['close']) for v in vals]
+          precio = closes[0]
+
+          # Sesgo H1
+          sh, sl = [], []
+          for i in range(1, len(vals)-1):
+              if highs[i] > highs[i-1] and highs[i] > highs[i+1]: sh.append(highs[i])
+              if lows[i]  < lows[i-1]  and lows[i]  < lows[i+1]:  sl.append(lows[i])
+          sesgo = 'LATERAL'
+          if len(sh) >= 2 and len(sl) >= 2:
+              if sh[0] < sh[1] and sl[0] < sl[1]: sesgo = 'BAJISTA'
+              elif sh[0] > sh[1] and sl[0] > sl[1]: sesgo = 'ALCISTA'
+          print(f'precio={precio:.2f} sesgo={sesgo}')
+
+          # OB SHORT (max 3)
+          short_zones = []
+          for i in range(len(vals)-2):
+              if opens[i] > closes[i] * 1.004:
+                  for j in range(i+1, min(i+10, len(vals))):
+                      if closes[j] > opens[j]:
+                          zh = max(opens[j], closes[j])
+                          zl = min(opens[j], closes[j])
+                          size = zh - zl
+                          if size > 1.0 and precio < zh * 1.005:
+                              short_zones.append({'type':'SHORT','zh':round(zh,2),'zl':round(zl,2),'sl':round(zh+size,2),'t1':round(zl-size*1.5,2)})
+                              break
+              if len(short_zones) >= 3: break
+
+          # OB LONG (max 3)
+          long_zones = []
+          for i in range(len(vals)-2):
+              if closes[i] > opens[i] * 1.004:
+                  for j in range(i+1, min(i+10, len(vals))):
+                      if opens[j] > closes[j]:
+                          zh = max(opens[j], closes[j])
+                          zl = min(opens[j], closes[j])
+                          size = zh - zl
+                          if size > 1.0 and precio > zl * 0.995:
+                              long_zones.append({'type':'LONG','zh':round(zh,2),'zl':round(zl,2),'sl':round(zl-size,2),'t1':round(zh+size*1.5,2)})
+                              break
+              if len(long_zones) >= 3: break
+
+          zones_list = short_zones + long_zones
+          print(f'zonas: {len(short_zones)} SHORT + {len(long_zones)} LONG')
+
+          high_48h = max(highs[:48])
+          low_48h  = min(lows[:48])
+
+          # Preservar macro_contexto y sesgo_semanal del zones.json actual
+          try:
+              prev = json.load(open('zones.json'))
+              macro_ctx     = prev.get('macro_contexto', {})
+              sesgo_semanal = prev.get('sesgo_semanal', 'LATERAL')
+              print(f'preservado: sesgo_semanal={sesgo_semanal} macro_contexto={bool(macro_ctx)}')
+          except:
+              macro_ctx = {}
+              sesgo_semanal = 'LATERAL'
+              print('zones.json no existia — valores por defecto')
+
+          timestamp_str = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+          zones_data = {
+              'updated': timestamp_str,
+              'sesgo': sesgo,
+              'sesgo_semanal': sesgo_semanal,
+              'macro_contexto': macro_ctx,
+              'precio_actual': round(precio, 2),
+              'high_48h': round(high_48h, 2),
+              'low_48h':  round(low_48h, 2),
+              'zones': zones_list
+          }
+          with open('zones.json', 'w') as f:
+              json.dump(zones_data, f, separators=(',', ':'))
+          print(f'zones.json escrito: {len(zones_list)} zonas | {timestamp_str}')
+          "
+
+      - name: Commit and push zones.json
+        run: |
+          git config user.email "auto-zonas@xauusd.system"
+          git config user.name "AUTO-ZONAS"
+          git add zones.json
+          TIMESTAMP=$(python3 -c "import json; print(json.load(open('zones.json'))['updated'])")
+          git commit -m "auto: zonas $TIMESTAMP" || echo "noop — sin cambios"
+          git push
