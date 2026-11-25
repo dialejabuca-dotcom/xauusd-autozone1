@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-25T00:22:44.683663Z",
+  "updated": "2026-11-25T00:23:43.886703Z",
   "sesgo": "BAJISTA",
   "choch_h1": false,
-  "precio_actual": 9999.99,
+  "precio_actual": 3542.02,
   "zona_precio": "DISCOUNT",
   "rango_48h": {
-    "min": 3521.75,
+    "min": 3541.83,
     "max": 3689.08
   },
   "red_folder_hoy": false,
@@ -15,35 +15,24 @@
   "sesgo_semanal": "BAJISTA",
   "sesgo_semanal_fuerza": "CLARO",
   "pdh": 3681.2,
-  "pdl": 3560.75,
-  "asian_high": 3646.18,
-  "asian_low": 3560.75,
+  "pdl": 3541.83,
+  "asian_high": 3574.81,
+  "asian_low": 3541.83,
   "threshold_override": null,
   "judas_sweep_ocurrido": false,
-  "macro_contexto": {
-    "fecha_calculo": "2026-11-24T16:35:52Z",
-    "fed_stance": "NEUTRAL",
-    "usd_strength": "FUERTE",
-    "riesgo_geopolitico": true,
-    "pce_reciente": "NEUTRAL",
-    "sesgo_macro": "BAJISTA_GOLD",
-    "cambio_pct_24h": -2.36,
-    "max_spike_1h": 56.91,
-    "nota": "fed_stance y pce_reciente = NEUTRAL (override manual si hay evento Fed/PCE)"
-  },
   "zones": [
     {
-      "id": "SHORT_FVG1",
+      "id": "SHORT_OB1",
       "type": "SHORT",
-      "zh": 3568.89,
-      "zl": 3533.2,
-      "sl": 3604.57,
-      "t1": 3497.52,
-      "rr_estimado": 1.0,
-      "touch_count": 3,
-      "zona_tipo": "FVG",
-      "descripcion": "FVG bajista H1 i=41",
-      "gap_size": 35.68
+      "zh": 3566.82,
+      "zl": 3565.27,
+      "sl": 3568.38,
+      "t1": 3563.72,
+      "rr_estimado": 2.0,
+      "touch_count": 2,
+      "descripcion": "OB bajista H1 2026-11-25 05:00:00",
+      "zona_tipo": "OB",
+      "exhaustion": "zona debilitada 2 cruces"
     },
     {
       "id": "LONG_OB2",
@@ -74,15 +63,26 @@
     {
       "id": "SHORT_OB4",
       "type": "SHORT",
-      "zh": 3668.76,
-      "zl": 3666.58,
-      "sl": 3670.95,
-      "t1": 3664.39,
+      "zh": 3670.9,
+      "zl": 3668.26,
+      "sl": 3673.53,
+      "t1": 3665.62,
       "rr_estimado": 2.0,
       "touch_count": 2,
-      "descripcion": "OB bajista H1 2026-11-24 13:00:00",
+      "descripcion": "OB bajista H1 2026-11-24 14:00:00",
       "zona_tipo": "OB",
       "exhaustion": "zona debilitada 2 cruces"
     }
-  ]
+  ],
+  "macro_contexto": {
+    "fecha_calculo": "2026-11-24T16:35:52Z",
+    "fed_stance": "NEUTRAL",
+    "usd_strength": "FUERTE",
+    "riesgo_geopolitico": true,
+    "pce_reciente": "NEUTRAL",
+    "sesgo_macro": "BAJISTA_GOLD",
+    "cambio_pct_24h": -2.36,
+    "max_spike_1h": 56.91,
+    "nota": "fed_stance y pce_reciente = NEUTRAL (override manual si hay evento Fed/PCE)"
+  }
 }
