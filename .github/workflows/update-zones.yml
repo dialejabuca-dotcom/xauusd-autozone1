@@ -1,0 +1,30 @@
+name: Update Zones
+on:
+  repository_dispatch:
+    types: [update-zones]
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write zones.json
+        env:
+          ZONES_JSON: ${{ toJSON(github.event.client_payload.zones) }}
+        run: |
+          printf '%s' "$ZONES_JSON" | python3 -c "
+import json,sys
+d=json.loads(sys.stdin.read())
+json.dump(d,open('zones.json','w'),separators=(',',':'))
+print('ok zones:',len(d.get('zones',[])))
+"
+      - name: Commit and push
+        env:
+          TIMESTAMP: ${{ github.event.client_payload.timestamp }}
+        run: |
+          git config user.email "bot@xauusd.bot"
+          git config user.name "AUTO-ZONAS"
+          git add zones.json
+          git commit -m "auto: zones ${TIMESTAMP}" || echo "noop"
+          git push
