@@ -1,1 +1,36 @@
-{"updated":"2026-11-25T20:39:25Z","sesgo":"BAJISTA","sesgo_semanal":"LATERAL","macro_contexto":{},"precio_actual":3568.27,"high_48h":3681.2,"low_48h":3426.48,"zones":[{"type":"SHORT","zh":3552.67,"zl":3548.17,"sl":3557.17,"t1":3541.42},{"type":"SHORT","zh":3552.67,"zl":3548.17,"sl":3557.17,"t1":3541.42},{"type":"SHORT","zh":3624.52,"zl":3616.2,"sl":3632.85,"t1":3603.72},{"type":"LONG","zh":3466.48,"zl":3450.68,"sl":3434.87,"t1":3490.19},{"type":"LONG","zh":3466.48,"zl":3450.68,"sl":3434.87,"t1":3490.19},{"type":"LONG","zh":3466.48,"zl":3450.68,"sl":3434.87,"t1":3490.19}]}
+{
+  "updated": "2026-11-25T21:45:00Z",
+  "sesgo": "BAJISTA",
+  "sesgo_semanal": "LATERAL",
+  "macro_contexto": {
+    "usd_strength": "NEUTRAL",
+    "sesgo_macro": "NEUTRAL",
+    "cambio_pct_24h": -0.19
+  },
+  "precio_actual": 3575.86,
+  "high_48h": 3681.2,
+  "low_48h": 3426.48,
+  "zones": [
+    {
+      "type": "SHORT",
+      "zh": 3624.52,
+      "zl": 3616.2,
+      "sl": 3632.85,
+      "t1": 3603.72
+    },
+    {
+      "type": "SHORT",
+      "zh": 3552.67,
+      "zl": 3548.17,
+      "sl": 3557.17,
+      "t1": 3541.42
+    },
+    {
+      "type": "LONG",
+      "zh": 3466.48,
+      "zl": 3450.68,
+      "sl": 3434.87,
+      "t1": 3490.19
+    }
+  ]
+}
