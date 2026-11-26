@@ -1,1 +1,13 @@
-{"updated":"2026-11-26T02:09:47Z","sesgo":"LATERAL","sesgo_semanal":"LATERAL","macro_contexto":{"usd_strength":"NEUTRAL","sesgo_macro":"NEUTRAL","cambio_pct_24h":-0.19},"precio_actual":3577.47,"high_48h":3646.18,"low_48h":3426.48,"zones":[{"type":"SHORT","zh":3589.23,"zl":3575.69,"sl":3602.77,"t1":3555.37},{"type":"LONG","zh":3466.48,"zl":3450.68,"sl":3434.87,"t1":3490.19}]}
+{
+  "updated": "2026-11-26T02:48:35Z",
+  "sesgo": "ALCISTA",
+  "zones": [
+    {
+      "type": "LONG",
+      "zh": 3589.23,
+      "zl": 3575.69,
+      "sl": 3570.69,
+      "t1": 3604.23
+    }
+  ]
+}
