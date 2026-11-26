@@ -1,0 +1,29 @@
+name: Send Signal Notification
+
+on:
+  repository_dispatch:
+    types: [send_signal]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Techulus Push
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://push.techulus.com/api/v1/notify/af848d46-588c-4b07-9225-c8e348313dc2" \
+            -H "Content-Type: application/json" \
+            -d "{\"title\": \"$TITLE\", \"body\": \"$BODY\", \"sound\": \"default\"}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "HTTP status: $HTTP_CODE"
+          echo "Title: $TITLE"
+          echo "Body: $BODY"
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
+            echo "✅ Push sent successfully"
+          else
+            echo "❌ Push failed with code $HTTP_CODE"
+            exit 1
+          fi
+        env:
+          TITLE: ${{ github.event.client_payload.title }}
+          BODY: ${{ github.event.client_payload.body }}
