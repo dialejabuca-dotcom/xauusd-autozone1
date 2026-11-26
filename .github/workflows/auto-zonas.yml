@@ -49,7 +49,7 @@ jobs:
               elif sh[0] > sh[1] and sl[0] > sl[1]: sesgo = 'ALCISTA'
           print(f'precio={precio:.2f} sesgo={sesgo}')
 
-          # OB SHORT (max 3)
+          # OB SHORT (max 1 — la mas reciente por encima del precio)
           short_zones = []
           for i in range(len(vals)-2):
               if opens[i] > closes[i] * 1.004:
@@ -61,9 +61,9 @@ jobs:
                           if size > 1.0 and precio < zh * 1.005:
                               short_zones.append({'type':'SHORT','zh':round(zh,2),'zl':round(zl,2),'sl':round(zh+size,2),'t1':round(zl-size*1.5,2)})
                               break
-              if len(short_zones) >= 3: break
+              if len(short_zones) >= 1: break
 
-          # OB LONG (max 3)
+          # OB LONG (max 1 — la mas reciente por debajo del precio)
           long_zones = []
           for i in range(len(vals)-2):
               if closes[i] > opens[i] * 1.004:
@@ -75,7 +75,7 @@ jobs:
                           if size > 1.0 and precio > zl * 0.995:
                               long_zones.append({'type':'LONG','zh':round(zh,2),'zl':round(zl,2),'sl':round(zl-size,2),'t1':round(zh+size*1.5,2)})
                               break
-              if len(long_zones) >= 3: break
+              if len(long_zones) >= 1: break
 
           zones_list = short_zones + long_zones
           print(f'zonas: {len(short_zones)} SHORT + {len(long_zones)} LONG')
