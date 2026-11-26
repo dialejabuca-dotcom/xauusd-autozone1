@@ -1,1 +1,5 @@
-{"updated":"2026-11-26T03:44:45Z","sesgo":"ALCISTA","sesgo_semanal":"LATERAL","macro_contexto":{},"precio_actual":3580.27,"high_48h":3646.18,"low_48h":3426.48,"zones":[{"type":"SHORT","zh":3589.23,"zl":3575.69,"sl":3602.77,"t1":3555.37},{"type":"LONG","zh":3578.71,"zl":3561.54,"sl":3544.38,"t1":3604.46}]}
+{
+  "updated": "2026-11-26T03:48:32Z",
+  "sesgo": "ALCISTA",
+  "zones": []
+}
