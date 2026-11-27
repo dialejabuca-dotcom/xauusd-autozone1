@@ -1,29 +1,34 @@
-name: Send Signal Notification
+name: M5 Signal Push
 
 on:
   repository_dispatch:
-    types: [send_signal]
+    types: [m5_signal]
 
 jobs:
-  notify:
+  write_signal:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Techulus Push
+      - name: Write m5_signal.json to repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIGNAL: ${{ github.event.client_payload.signal }}
+          MESSAGE: ${{ github.event.client_payload.message }}
+          SCORE: ${{ github.event.client_payload.score }}
+          TS: ${{ github.event.client_payload.ts }}
         run: |
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
-            "https://push.techulus.com/api/v1/notify/af848d46-588c-4b07-9225-c8e348313dc2" \
-            -H "Content-Type: application/json" \
-            -d "{\"title\": \"$TITLE\", \"body\": \"$BODY\", \"sound\": \"default\"}")
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-          echo "HTTP status: $HTTP_CODE"
-          echo "Title: $TITLE"
-          echo "Body: $BODY"
-          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
-            echo "✅ Push sent successfully"
+          echo "M5 Signal received: $SIGNAL (score: $SCORE)"
+          JSON="{"signal":"$SIGNAL","message":"$MESSAGE","score":"$SCORE","ts":"$TS","notify":true}"
+          B64=$(echo -n "$JSON" | base64 -w 0)
+          SHA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${{ github.repository }}/contents/m5_signal.json" | python3 -c "import sys,json; print(json.load(sys.stdin).get('sha',''))" 2>/dev/null || echo "")
+          if [ -n "$SHA" ]; then
+            BODY="{"message":"M5 $SIGNAL","content":"$B64","sha":"$SHA"}"
           else
-            echo "❌ Push failed with code $HTTP_CODE"
+            BODY="{"message":"M5 $SIGNAL","content":"$B64"}"
+          fi
+          HTTP=$(curl -s -o /tmp/r.json -w "%{http_code}" -X PUT -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "Content-Type: application/json" -d "$BODY" "https://api.github.com/repos/${{ github.repository }}/contents/m5_signal.json")
+          if [ "$HTTP" = "200" ] || [ "$HTTP" = "201" ]; then
+            echo "m5_signal.json updated - MONITOR will push on next run"
+          else
+            cat /tmp/r.json | head -c 300
             exit 1
           fi
-        env:
-          TITLE: ${{ github.event.client_payload.title }}
-          BODY: ${{ github.event.client_payload.body }}
